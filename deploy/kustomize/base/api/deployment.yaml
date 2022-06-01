@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: production
+  labels:
+    app: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: regcred
+      initContainers:
+        - name: migrate-public-schmema
+          image: artisan
+          imagePullPolicy: IfNotPresent
+          command: [ "./bin/artisan", "migrate", "up", "public" ]
+          envFrom:
+            - configMapRef:
+                name: configs
+          env:
+            - name: APP_ENVIRONMENT
+              value: "production"
+            - name: APP_PORT
+              value: "8080"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: postgres.uninow-pg-cluster.credentials
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: postgres.uninow-pg-cluster.credentials
+            - name: APP_MESSAGESECRET
+              valueFrom:
+                secretKeyRef:
+                  key: messagesecret
+                  name: secrets
+        - name: migrate-authentication-schmema
+          image: artisan
+          imagePullPolicy: IfNotPresent
+          command: [ "./bin/artisan", "migrate", "up", "authentication" ]
+          envFrom:
+            - configMapRef:
+                name: configs
+          env:
+            - name: APP_ENVIRONMENT
+              value: "production"
+            - name: APP_PORT
+              value: "8080"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: postgres.uninow-pg-cluster.credentials
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: postgres.uninow-pg-cluster.credentials
+      containers:
+        - image: api
+          imagePullPolicy: IfNotPresent
+          name: api
+          livenessProbe:
+            httpGet:
+              path: "/health"
+              port: 1232
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+            periodSeconds: 10
+            failureThreshold: 2
+          readinessProbe:
+            httpGet:
+              path: "/health"
+              port: 1232
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+            periodSeconds: 5
+            failureThreshold: 2
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "150m"
+          ports:
+            - containerPort: 1232
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: configs
+          env:
+            - name: APP_PORT
+              value: "1232"
+            - name: APP_ENVIRONMENT
+              value: "production"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: postgres.uninow-pg-cluster.credentials
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: postgres.uninow-pg-cluster.credentials
