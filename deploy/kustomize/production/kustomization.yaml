@@ -6,7 +6,7 @@ namespace: production
 images:
 - name: api
   newName: ghcr.io/uninow/ci-cd-argo-api
-  newTag: main_016c578
+  newTag: main_79db43b
 - name: web
   newName: ghcr.io/uninow/ci-cd-demo
   newTag: v0.1.47
