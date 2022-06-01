@@ -19,3 +19,17 @@ jobs:
       run:
         working-directory: ./apps/web
 
+    steps:
+      - uses: actions/checkout@master
+
+
+      - name: Initial Deployment Preview Comment
+        uses: peter-evans/create-or-update-comment@v1.4.5
+        id: pr-preview-comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ### Building Deployment Preview..
+            A preview of this Pull Request is being created. Hold tight while it's building ⚒️
+            This comment will be automatically updated when the preview is ready.
+
