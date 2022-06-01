@@ -6,9 +6,7 @@ namespace: production
 resources:
   - namespace.yaml
   - quota.yaml
-  - limit-range.yaml
-
-  - postgres.yaml
+  - limits.yaml
 
   - api/deployment.yaml
   - api/service.yaml
