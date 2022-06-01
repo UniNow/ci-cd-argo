@@ -10,7 +10,7 @@ spec:
   tls:
     - hosts:
         - ci-cd-demo.uninow.io
-      secretName: k8s-main-tls
+      secretName: k8s-demo-tls
   rules:
     - host: ci-cd-demo.uninow.io
       http:
