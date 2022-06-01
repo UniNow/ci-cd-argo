@@ -22,9 +22,9 @@ jobs:
         uses: docker/setup-qemu-action@v1.2.0
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1.6.0
-      - name: Get the version
+      - name: Get version
         id: get_version
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+        run: echo ::set-output name=VERSION::main_$(git rev-parse --short HEAD)
       - name: Build Binary
         run: CGO_ENABLED=0 GOOS=linux cd ./apps/web && go build -mod=readonly -v -o ./bin/web ./cmd/web
       - name: Login to GitHub Container Registry
@@ -41,3 +41,32 @@ jobs:
           push: true
           tags: |
             ghcr.io/uninow/ci-cd-argo-website:${{ steps.get_version.outputs.VERSION }}
+
+  kustomize:
+    runs-on: ubuntu-latest
+    needs:
+      - build-docker-image
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.0.2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+      - name: Get version
+        id: version
+        run: echo ::set-output name=VERSION::main_$(git rev-parse --short HEAD)
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v1
+        with:
+          kustomize-version: "4.x"
+      - name: Update Image version
+        run: |
+          cd deploy/kustomize/production
+          kustomize edit set image website=ghcr.io/uninow/ci-cd-argo-website:${{ steps.version.outputs.VERSION }}
+          cat kustomization.yaml
+      - name: deploy changes
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git add .
+          git commit -am "ci: :rocket: Bump version to ${{ steps.version.outputs.VERSION }}"
+          git push origin HEAD:main
