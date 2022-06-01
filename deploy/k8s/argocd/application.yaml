@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: demo
   namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-sync-succeeded.slack: demo-app-audit
 spec:
   project: default
   source:
