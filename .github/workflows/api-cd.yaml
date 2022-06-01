@@ -27,7 +27,8 @@ jobs:
         id: get_version
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       - name: Build Binary
-        run: CGO_ENABLED=0 GOOS=linux go build -mod=readonly -v -o apps/api/bin/main apps/api/cmd/main
+        run: CGO_ENABLED=0 GOOS=linux go build -mod=readonly -v -o ./bin/main ./cmd/main
+        working-directory: apps/api
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1.14.1
         with:
