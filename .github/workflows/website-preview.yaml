@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [opened, synchronized, closed]
     branches:
-      - develop
+      - main
     paths:
       - 'apps/website/**'
   workflow_dispatch:
