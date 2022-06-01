@@ -35,9 +35,9 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Push to GitHub Packages
-        uses: docker/build-push-action@v2.10.0
+        uses: docker/build-push-action@v3
         with:
-          file: './apps/api/build/Dockerfile'
+          file: 'build/Dockerfile'
           context: './apps/api'
           push: true
           tags: |
