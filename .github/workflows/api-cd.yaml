@@ -7,6 +7,7 @@ on:
     paths:
       - 'apps/api/**'
 
+
 jobs:
   build-docker-image:
     timeout-minutes: 15
@@ -26,7 +27,7 @@ jobs:
         id: get_version
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       - name: Build Binary
-        run: CGO_ENABLED=0 GOOS=linux go build -mod=readonly -v -o ./apps/website/bin/main ./apps/website/cmd/main
+        run: CGO_ENABLED=0 GOOS=linux go build -mod=readonly -v -o ./apps/api/bin/main ./apps/api/cmd/main
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1.14.1
         with:
@@ -36,8 +37,8 @@ jobs:
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v2.10.0
         with:
-          file: './apps/website/build/Dockerfile'
-          context: './apps/website'
+          file: './apps/api/build/Dockerfile'
+          context: './apps/api'
           push: true
           tags: |
-            ghcr.io/uninow/ci-cd-argo-website:${{ steps.get_version.outputs.VERSION }}
+            ghcr.io/uninow/ci-cd-argo-api:${{ steps.get_version.outputs.VERSION }}

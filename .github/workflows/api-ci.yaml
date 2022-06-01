@@ -1,4 +1,4 @@
-name: Website CI
+name: Apps/API CI
 
 on:
   push:
@@ -21,6 +21,7 @@ jobs:
         uses: golangci/golangci-lint-action@v3.1.0
         with:
           version: v1.29
+          working-directory: 'apps/api'
 
 
 
