@@ -12,7 +12,7 @@ func main() {
 	})
 
 	e.GET("/health", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
+		return c.String(http.StatusOK, "Hello, Health!")
 	})
 	e.Logger.Fatal(e.Start(":1323"))
 }
