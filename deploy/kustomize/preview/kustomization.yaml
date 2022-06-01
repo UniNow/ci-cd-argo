@@ -1,0 +1,39 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: production
+
+images:
+  - name: artisan
+    newName: ghcr.io/uninow/ci-cd-demo
+    newTag: v0.1.47
+  - name: web
+    newName: ghcr.io/uninow/ci-cd-demo
+    newTag: v0.1.47
+  - name: api
+    newName: ghcr.io/uninow/ci-cd-demo
+    newTag: v0.1.47
+
+resources:
+  - ../base
+
+
+
+configMapGenerator:
+  - literals:
+      - APP_DOMAIN=https://ci-cd-demo.uninow.io
+    name: configs
+
+patchesJson6902:
+  - path: ingress_patch.yaml
+    target:
+      group: networking.k8s.io
+      kind: Ingress
+      name: api
+      version: v1
+  - path: ingress_patch.yaml
+    target:
+      group: networking.k8s.io
+      kind: Ingress
+      name: website
+      version: v1
