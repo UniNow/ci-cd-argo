@@ -7,5 +7,6 @@ import (
 func RegisterRoutes(e *echo.Echo) error {
 	h := Handler{}
 	e.GET("/", h.ShowHome)
+	e.GET("/health", h.ShowHome)
 	return nil
 }
