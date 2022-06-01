@@ -1,4 +1,4 @@
-name: Website CI
+name: Apps/Website CI
 
 on:
   push:
