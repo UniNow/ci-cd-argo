@@ -10,6 +10,9 @@ images:
 - name: web
   newName: ghcr.io/uninow/ci-cd-demo
   newTag: v0.1.47
+- name: website
+  newName: ghcr.io/uninow/ci-cd-argo-website
+  newTag: main_6de66f5
 
 resources:
 - ../base
