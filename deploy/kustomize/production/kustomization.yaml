@@ -4,19 +4,19 @@ kind: Kustomization
 namespace: production
 
 images:
-  - name: web
-    newName: ghcr.io/uninow/ci-cd-demo
-    newTag: v0.1.47
-  - name: api
-    newName: ghcr.io/uninow/ci-cd-demo
-    newTag: v0.1.47
+- name: api
+  newName: ghcr.io/uninow/ci-cd-argo-api
+  newTag: main_8054fb7
+- name: web
+  newName: ghcr.io/uninow/ci-cd-demo
+  newTag: v0.1.47
 
 resources:
-  - ../base
+- ../base
 
 
 
 configMapGenerator:
-  - literals:
-      - APP_DOMAIN=https://ci-cd-demo.uninow.io
-    name: configs
+- literals:
+  - APP_DOMAIN=https://ci-cd-demo.uninow.io
+  name: configs
