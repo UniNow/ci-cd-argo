@@ -1,4 +1,4 @@
 FROM gcr.io/distroless/base
-COPY /bin/main /bin/main
+COPY /bin/api /bin/api
 COPY /config.yaml ./
-CMD ["/bin/main"]
+CMD ["/bin/api"]
