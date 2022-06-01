@@ -1,4 +1,4 @@
-name: Apps/API CD
+name: Apps/Website CD
 
 on:
   push:
