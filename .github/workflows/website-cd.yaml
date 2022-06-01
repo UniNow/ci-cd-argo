@@ -36,7 +36,7 @@ jobs:
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v3
         with:
-          file: './apps/web/build/Dockerfile'
+          file: './apps/web/Dockerfile'
           context: './apps/web'
           push: true
           tags: |
