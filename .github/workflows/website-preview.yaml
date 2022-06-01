@@ -1,0 +1,16 @@
+name: Apps/Website CI
+
+on:
+  pull_request:
+    types: [opened, synchronized, closed]
+    branches:
+      - main
+    paths:
+      - 'apps/website/**'
+  workflow_dispatch:
+
+jobs:
+  create-deployment-preview:
+    if: github.event.action == 'opened'
+
+
