@@ -18,56 +18,6 @@ spec:
       restartPolicy: Always
       imagePullSecrets:
         - name: regcred
-      initContainers:
-        - name: migrate-public-schmema
-          image: artisan
-          imagePullPolicy: IfNotPresent
-          command: [ "./bin/artisan", "migrate", "up", "public" ]
-          envFrom:
-            - configMapRef:
-                name: configs
-          env:
-            - name: APP_ENVIRONMENT
-              value: "production"
-            - name: APP_PORT
-              value: "8080"
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: password
-                  name: postgres.uninow-pg-cluster.credentials
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  key: username
-                  name: postgres.uninow-pg-cluster.credentials
-            - name: APP_MESSAGESECRET
-              valueFrom:
-                secretKeyRef:
-                  key: messagesecret
-                  name: secrets
-        - name: migrate-authentication-schmema
-          image: artisan
-          imagePullPolicy: IfNotPresent
-          command: [ "./bin/artisan", "migrate", "up", "authentication" ]
-          envFrom:
-            - configMapRef:
-                name: configs
-          env:
-            - name: APP_ENVIRONMENT
-              value: "production"
-            - name: APP_PORT
-              value: "8080"
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: password
-                  name: postgres.uninow-pg-cluster.credentials
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  key: username
-                  name: postgres.uninow-pg-cluster.credentials
       containers:
         - image: api
           imagePullPolicy: IfNotPresent
@@ -106,13 +56,3 @@ spec:
               value: "1232"
             - name: APP_ENVIRONMENT
               value: "production"
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: password
-                  name: postgres.uninow-pg-cluster.credentials
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  key: username
-                  name: postgres.uninow-pg-cluster.credentials
