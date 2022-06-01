@@ -10,8 +10,8 @@ resources:
 
   - api/deployment.yaml
   - api/service.yaml
-  - api/ingress.yaml
 
   - website/deployment.yaml
   - website/service.yaml
-  - website/ingress.yaml
+
+  - ingress.yaml
