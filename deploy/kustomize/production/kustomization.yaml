@@ -12,7 +12,7 @@ images:
     newTag: v0.1.47
 
 resources:
-- ../base
+- ./../base
 
 
 
