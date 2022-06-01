@@ -15,7 +15,7 @@ images:
   newTag: main_6de66f5
 
 resources:
-- ../base
+- ./../base
 
 
 

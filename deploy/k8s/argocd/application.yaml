@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:UniNow/ci-cd-argo.git
+    targetRevision: HEAD
+    path: deploy/kustomize/production
+
+    kustomize:
+      namePrefix: t
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: production
