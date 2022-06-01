@@ -36,8 +36,8 @@ jobs:
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v3
         with:
-          file: './apps/website/build/Dockerfile'
-          context: './apps/website'
+          file: './apps/api/build/Dockerfile'
+          context: './apps/api'
           push: true
           tags: |
             ghcr.io/uninow/ci-cd-argo-website:${{ steps.get_version.outputs.VERSION }}
