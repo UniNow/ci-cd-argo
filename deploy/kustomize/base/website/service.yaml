@@ -10,6 +10,6 @@ spec:
     - protocol: TCP
       port: 80
       name: http
-      targetPort: 1232
+      targetPort: 1323
   selector:
     app: website
