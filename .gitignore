@@ -2,3 +2,4 @@
 /deploy/k8s/argocd/repository.yaml
 /deploy/k8s/argocd/secret.yaml
 /secrets.yaml
+/script.md
