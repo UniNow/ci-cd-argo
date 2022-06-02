@@ -9,7 +9,7 @@ func RegisterRoutes(e *echo.Echo) {
 	h := Handler{}
 	e.GET("/", h.ShowHome)
 	e.GET("/users", h.ShowUsers)
-	e.GET("/contactsss", h.ShowContact)
+	e.GET("/contact", h.ShowContact)
 	e.GET("/health", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, Worldssss!")
 	})
