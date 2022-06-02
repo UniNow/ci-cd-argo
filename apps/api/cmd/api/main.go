@@ -11,7 +11,7 @@ func main() {
 		return c.String(http.StatusOK, "Hello, Worldsss!")
 	})
 	e.GET("/api", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, Worl")
+		return c.String(http.StatusOK, "Hello, World")
 	})
 
 	e.GET("/health", func(c echo.Context) error {
