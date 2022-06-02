@@ -79,6 +79,7 @@ jobs:
           parallel: true
           group: 'UI - Chrome'
           spec: cypress/e2e/*
+          working-directory: apps/web
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
           # Recommended: pass the GitHub token lets this action correctly
