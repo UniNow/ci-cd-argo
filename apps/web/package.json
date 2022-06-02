@@ -2,7 +2,7 @@
   "scripts": {
     "build": "echo 'building'"
   },
-  "devdependencies": {
+  "devDependencies": {
     "cypress": "^10.0.1"
   }
 }
