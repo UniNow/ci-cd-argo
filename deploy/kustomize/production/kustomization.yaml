@@ -12,7 +12,7 @@ images:
   newTag: v0.1.47
 - name: website
   newName: ghcr.io/uninow/ci-cd-argo-website
-  newTag: main_c10a8ab
+  newTag: main_e425d44
 
 resources:
 - ./../base
