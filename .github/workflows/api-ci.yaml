@@ -22,6 +22,63 @@ jobs:
         with:
           version: v1.29
           working-directory: './apps/api'
+  test-go:
+    name: Test
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v2.1.3
+        with:
+          go-version: 1.17
+
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      #- name: Build CLI for linux
+      #  run: go build -tags release -ldflags '-X uninow/cmd.Version=v0.0.7-11-g47dc1dd-dirty' -o ./artisan ./cmd/artisan
+
+      #- name: Migrate Database
+      #  run: ./artisan migrate up
+      #  env:
+      #    DB_PASSWORD: postgres
+      #    DB_USER: postgres
+      #    DB_DATABASE: postgres
+
+      - name: Run Unit tests.
+        run: go test ./... -coverprofile=c.out
+        working-directory: './apps/api'
+        env:
+          DB_PASSWORD: postgres
+          DB_USER: postgres
+          DB_DATABASE: postgres
+
+  slackNotification:
+    name: Slack Notification
+    runs-on: ubuntu-latest
+    needs: [lint-go, test-go]
+    steps:
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_TITLE: All tests passed for api
+          SLACK_USERNAME: rtCamp
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
 
 
 
