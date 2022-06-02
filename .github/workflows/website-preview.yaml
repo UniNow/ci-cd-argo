@@ -1,8 +1,8 @@
-name: Apps/Website CI
+name: Apps/Website Preview CI
 
 on:
   pull_request:
-    types: [opened, synchronized, closed]
+    types: [opened, synchronize, closed]
     branches:
       - main
     paths:
