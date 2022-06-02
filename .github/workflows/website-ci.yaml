@@ -35,7 +35,7 @@ jobs:
         with:
           runTests: false
           build: npm run build
-          working-directory: apps/website
+          working-directory: apps/web
       - name: Save build folder
         uses: actions/upload-artifact@v3
         with:
