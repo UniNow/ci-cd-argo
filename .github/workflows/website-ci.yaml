@@ -141,5 +141,5 @@ jobs:
         env:
           SLACK_COLOR: ${{ job.status }}
           SLACK_TITLE: All tests passed for api
-          SLACK_USERNAME: rtCamp
+          SLACK_USERNAME: UniNowBot
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
