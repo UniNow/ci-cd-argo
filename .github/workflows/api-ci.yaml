@@ -60,6 +60,7 @@ jobs:
 
       - name: Run Unit tests.
         run: go test ./... -coverprofile=c.out
+        working-directory: './apps/api'
         env:
           DB_PASSWORD: postgres
           DB_USER: postgres
